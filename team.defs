@@ -1,17 +1,9 @@
-#Sat Mar 20 13:34:07 CET 2021
-bluej.teamsettings.ignore1=.*\\.class
+#Sat Mar 20 14:26:00 CET 2021
+bluej.teamsettings.user=stephan-steinmiller
 bluej.teamsettings.yourName=Stephan Steinmiller
 bluej.teamsettings.git.server=github.com
 bluej.teamsettings.yourEmail=stephansteinmiller@pm.me
 bluej.teamsettings.git.repositoryPrefix=/stephan-steinmiller/minesweeper
-bluej.teamsettings.vcs=git
-bluej.teamsettings.user=stephan-steinmiller
-bluej.teamsettings.ignore3=team\\.defs
-bluej.teamsettings.ignore2=bluej\\.pkh
-bluej.teamsettings.ignore5=.*\\~
 bluej.teamsettings.git.branch=
-bluej.teamsettings.ignore4=.*\\.ctxt
-bluej.teamsettings.ignore7=.*\\\#backup
-bluej.teamsettings.ignore6=.*\\\#
+bluej.teamsettings.vcs=git
 bluej.teamsettings.git.protocol=https
-bluej.teamsettings.ignore8=\\.DS_Store
