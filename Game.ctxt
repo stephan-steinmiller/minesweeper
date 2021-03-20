@@ -1,0 +1,23 @@
+#BlueJ class context
+comment0.target=Game
+comment1.params=columns\ rows\ mines
+comment1.target=Game(int,\ int,\ int)
+comment10.params=
+comment10.target=int\ getRows()
+comment2.params=
+comment2.target=void\ setMines()
+comment3.params=
+comment3.target=int\ getRandomColumn()
+comment4.params=
+comment4.target=int\ getRandomRow()
+comment5.params=
+comment5.target=void\ endGame()
+comment6.params=i\ j
+comment6.target=void\ openCell(int,\ int)
+comment7.params=i\ j
+comment7.target=void\ flagCell(int,\ int)
+comment8.params=gui
+comment8.target=void\ setGui(GUI)
+comment9.params=
+comment9.target=int\ getColumns()
+numComments=11

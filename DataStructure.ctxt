@@ -1,0 +1,25 @@
+#BlueJ class context
+comment0.target=DataStructure
+comment1.params=columns\ rows
+comment1.target=DataStructure(int,\ int)
+comment10.params=node\ index
+comment10.target=Node\ getLinkedNodeByIndex(Node,\ int)
+comment11.params=i\ j
+comment11.target=Node\ getNode(int,\ int)
+comment2.params=
+comment2.target=void\ createStructure()
+comment3.params=i
+comment3.target=void\ createRow(int)
+comment4.params=currentNode\ i
+comment4.target=void\ linkAllNodes(Node,\ int)
+comment5.params=node\ i
+comment5.target=void\ appendAtBottom(Node,\ int)
+comment6.params=node\ i
+comment6.target=Node\ getNodeDownwards(Node,\ int)
+comment7.params=node\ j
+comment7.target=Node\ getNodeRightwards(Node,\ int)
+comment8.params=node
+comment8.target=void\ calculateValues(Node)
+comment9.params=node
+comment9.target=void\ calculateValue(Node)
+numComments=12

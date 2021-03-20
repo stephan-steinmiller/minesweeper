@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=GUI
+comment1.params=game
+comment1.target=GUI(Game)
+comment2.params=newLeftMinesCounter
+comment2.target=void\ setLeftMinesCounter(int)
+comment3.params=newMovesCounter
+comment3.target=void\ setMovesCounter(javax.swing.JLabel)
+comment4.params=i\ j\ text
+comment4.target=void\ setButtonText(int,\ int,\ java.lang.String)
+comment5.params=i\ j\ isSelected
+comment5.target=void\ setButtonSelected(int,\ int,\ boolean)
+comment6.params=newMovesCounter
+comment6.target=void\ setMovesCounter(int)
+comment7.params=
+comment7.target=void\ showGameOverLabel()
+numComments=8

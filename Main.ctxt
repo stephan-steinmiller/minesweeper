@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=Main
+comment1.params=
+comment1.target=Main()
+comment2.params=dificulty
+comment2.target=void\ selectDificulty(java.lang.String)
+comment3.params=columns\ rows\ mines
+comment3.target=void\ createGame(int,\ int,\ int)
+numComments=4
