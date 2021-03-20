@@ -28,6 +28,8 @@ public class Main {
                 break;
             case "Profis":
             case "profis":
+            case "Profi":
+            case "profi":
                 createGame(30,16,99);
                 break;
         }

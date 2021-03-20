@@ -7,7 +7,7 @@ import java.awt.event.*;
 public class GUI {
     private Game game;
     private JPanel panel;
-    private JLabel gameOverLabel, leftMinesCounter, movesCounter;
+    private JLabel gameOverLabel, youWonLabel, leftMinesCounter, movesCounter;
     private JToggleButton[][] buttonGrid;
 
     public GUI(Game game) {
@@ -35,6 +35,10 @@ public class GUI {
         gameOverLabel = new JLabel("Game Over!");
         gameOverLabel.setForeground(Color.RED);
         gameOverLabel.setFont(new Font("LCD", Font.PLAIN, 32));
+        
+        youWonLabel = new JLabel("You Won gg");
+        youWonLabel.setForeground(Color.GREEN);
+        youWonLabel.setFont(new Font("LCD", Font.PLAIN, 32));
         
         JPanel gameInformation = new JPanel();
         gameInformation.setLayout(new BoxLayout(gameInformation, BoxLayout.LINE_AXIS));
@@ -127,6 +131,9 @@ public class GUI {
     }
     public void showGameOverLabel() {
         panel.add(gameOverLabel);
+    }
+    public void showYouWonLabel() {
+        panel.add(youWonLabel);
     }
 }
 

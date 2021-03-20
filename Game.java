@@ -1,7 +1,7 @@
 public class Game {
     private GUI gui;
     // Das Spiel muss wissen wann es vorbei ist um nicht mehr auf die Eingaben des Spielers zu reagieren
-    private boolean gameOver;
+    private boolean gameOver, lostGame;
     // Das Spiel besitzt Anzahl von Reihen, Spalten, übrigen Minen und vergangenen Schritten
     private int columns, rows, mines, leftMinesCounter, movesCounter;
     
@@ -36,12 +36,13 @@ public class Game {
     
     private void setMines() {
         // Hier werden 10 Mienen gesetzt, wenn auf dem zufälligen Feld schon eine Mine gesetzt ist, so wird ein anderes Feld gewählt
-        while(mines>0) {
+        int minesLeftToSet = mines;
+        while(minesLeftToSet>0) {
             Cell cellToSetMineAt = board.getNode(getRandomColumn(),getRandomRow());
             if(!cellToSetMineAt.isMine()) {
                 cellToSetMineAt.setMine();
                 cellToSetMineAt.setValueIsCalculated(true);
-                mines--;
+                minesLeftToSet--;
             }
         }
     }
@@ -60,7 +61,11 @@ public class Game {
     private void endGame() {
         // das Spiel ist vorbei und Game Over wird ausgegeben
         gameOver = true;
-        gui.showGameOverLabel();
+        if(lostGame) {
+            gui.showGameOverLabel();
+        } else {
+            gui.showYouWonLabel();
+        }
     }
 
     
@@ -80,18 +85,21 @@ public class Game {
             movesCounter++;
             gui.setMovesCounter(movesCounter);
             
+            // Feld wird aufgedeckt, und die Zahl angegeben
+            cellToOpen.openCell();
             if(cellToOpen.isMine()) {
                 // Wenn eine Mine getroffen, wird das Spiel beendet
-                cellToOpen.openCell();
                 gui.setButtonText(i, j, "*");
+                lostGame = true;
                 endGame();
             } else {
-                // Feld wird aufgedeckt, und die Zahl angegeben
-                cellToOpen.openCell();
                 if(cellToOpen.getValue() == 0)
                     gui.setButtonText(i, j, "");
                 else
                     gui.setButtonText(i, j, cellToOpen.getValueAsString());
+                if(movesCounter+mines == columns*rows) {
+                    endGame();
+                }
             }
         }
     }
