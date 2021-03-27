@@ -1,6 +1,17 @@
 public class Node extends Cell {
     private Node top, topRight, right, bottomRight, bottom, bottomLeft, left, topLeft;
     
+    public Node(int row, int column) {
+        super(row, column);
+        top = null;
+        topRight = null;
+        right = null;
+        bottomRight = null;
+        bottom = null;
+        bottomLeft = null;
+        left = null;
+        topLeft = null;
+    }
     public Node() {
         top = null;
         topRight = null;

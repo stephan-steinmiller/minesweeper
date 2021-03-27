@@ -1,10 +1,9 @@
-// Keine Dokumentation
-
-public class DataStructure {
+public class DataStructureBoard extends Board {
     private int columns, rows;
     private Node start;
     
-    public DataStructure(int columns, int rows) {
+    public DataStructureBoard(int columns, int rows, GUI gui) {
+        super(columns,rows,gui);
         this.columns = columns;
         this.rows = rows;
         createStructure();
@@ -21,16 +20,16 @@ public class DataStructure {
         
         for(int j = 0; j<columns; j++){
             if(i == 0 && j == 0) {
-                start = new Node();
+                start = new Node(i,j);
                 
                 previousNode = start;
             } else if(i > 0 && j == 0) {
-                currentNode = new Node();
+                currentNode = new Node(i,j);
                 appendAtBottom(currentNode, i);
                 
                 previousNode = currentNode;
             } else {
-                currentNode = new Node();
+                currentNode = new Node(i,j);
                 previousNode.setRight(currentNode);
                 currentNode.setLeft(previousNode);
                 if(i > 0) {
@@ -72,16 +71,24 @@ public class DataStructure {
         return node;
     }
     
-    
-    public void calculateValues(Node node) {
+    @Override
+    public void calculateValues(int i, int j) {
+        long start = System.nanoTime();
+        steps = 0;
+        calculateValuesOfNode(getNode(i,j));
+        long finish = System.nanoTime();
+        long timeElapsed = finish - start;
+        System.out.println("Steps Datastructure:"+steps);
+        System.out.println("Time Datastructure:"+timeElapsed);
+    }
+    public void calculateValuesOfNode(Node node) {
         // Tiefensuche mit Hilfe von Rekursion
         if(!node.getValueIsCalculated())
             calculateValue(node);
         for(int l = 0; l < 8; l++) {
             Node nodeToCalculateValuesOf = getLinkedNodeByIndex(node, l);
-            System.out.println(node.getValueIsCalculated());
             if(nodeToCalculateValuesOf != null && !nodeToCalculateValuesOf.getValueIsCalculated())
-                calculateValues(nodeToCalculateValuesOf);
+                calculateValuesOfNode(nodeToCalculateValuesOf);
         }
     }
     private void calculateValue(Node node) {
@@ -92,7 +99,34 @@ public class DataStructure {
         }
         node.setValueIsCalculated(true);
     }
-    public Node getLinkedNodeByIndex(Node node, int index) {
+    
+    // @Override
+    // public void findAllNeighboredZeros(int i, int j) {
+        // for(int l = 0; l < 8; l++) {
+            // Node nodeToFindNeighboursOf = getLinkedNodeByIndex(getNode(i,j), l);
+            // if(nodeToFindNeighboursOf != null && !nodeToFindNeighboursOf.isOpen()) {
+                // openCell(nodeToFindNeighboursOf.getColumn(),nodeToFindNeighboursOf.getRow(),nodeToFindNeighboursOf);
+                // findAllNeighbouredZerosFromNode(nodeToFindNeighboursOf);
+            // }
+        // }
+    // }
+    // private void findAllNeighbouredZerosFromNode(Node node) {
+        // // Tiefensuche mit Hilfe von Rekursion
+        // System.out.println("pls");
+        // if(node.getValue() == 0) {
+            // System.out.println("bitte funktionier");
+            // for(int l = 0; l < 8; l++) {
+                // Node nodeToFindNeighboursOf = getLinkedNodeByIndex(node, l);
+                // if(nodeToFindNeighboursOf != null && !nodeToFindNeighboursOf.isOpen()) {
+                    // openCell(nodeToFindNeighboursOf.getColumn(),nodeToFindNeighboursOf.getRow(),nodeToFindNeighboursOf);
+                    // findAllNeighbouredZerosFromNode(nodeToFindNeighboursOf);
+                // }
+            // }
+        // }
+    // }
+    
+    private Node getLinkedNodeByIndex(Node node, int index) {
+        steps++;
         switch(index) {
             case 0: return node.getTop();
             case 1: return node.getTopRight();
@@ -105,8 +139,11 @@ public class DataStructure {
             default:return null;
         }
     }
-    
-    public Node getNode(int i, int j) {
+    @Override
+    public Cell getCell(int i, int j) {
+        return getNode(i, j);
+    }
+    private Node getNode(int i, int j) {
         return getNodeRightwards(getNodeDownwards(start, i),j);
     }
 }

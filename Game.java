@@ -4,14 +4,9 @@ public class Game {
     private boolean gameOver, lostGame;
     // Das Spiel besitzt Anzahl von Reihen, Spalten, übrigen Minen und vergangenen Schritten
     private int columns, rows, mines, leftMinesCounter, movesCounter;
+    private Board board;
     
-    // Zum speichern der Zellen habe ich mich gegen einen Array und für eine eigen erstellte Datenstruktur entschieden
-    private DataStructure board;
-    
-    // Ich hatte mich zuerst für ein 2 Dimensionales Array entschieden
-    // private Cell[][] board;
-    
-    public Game(int columns, int rows, int mines) {
+    public Game(int columns, int rows, int mines, boolean withArrayBoard, CellPosition[] minePattern) {
         gameOver = false;
         
         this.columns = columns;
@@ -20,31 +15,50 @@ public class Game {
         leftMinesCounter = mines;
         movesCounter = 0;
         
-        board = new DataStructure(columns, rows);
+        if(withArrayBoard) {
+            board = new ArrayBoard(columns, rows, gui);
+        } else {
+            board = new DataStructureBoard(columns, rows, gui);
+        }
         
-        // board = new Cell[8][8];
-        // for(int i = 0; i < 8; i++) {
-            // for(int j = 0; j < 8; j++) {
-                // board[i][j] = new Cell();
-            // }
-        // }
-        
-        setMines();
-        // Hier wird ein Punkt ausgewählt von dem aus die Werte der Felder berechnet werden
-        board.calculateValues(board.getNode(4,4));        
+        if(minePattern == null) {
+            setMines();
+        } else {
+            this.mines = minePattern.length;
+            setMinePattern(minePattern);
+        }
+        board.calculateValues(6,4);
     }
     
     private void setMines() {
         // Hier werden 10 Mienen gesetzt, wenn auf dem zufälligen Feld schon eine Mine gesetzt ist, so wird ein anderes Feld gewählt
         int minesLeftToSet = mines;
         while(minesLeftToSet>0) {
-            Cell cellToSetMineAt = board.getNode(getRandomColumn(),getRandomRow());
+            Cell cellToSetMineAt = board.getCell(getRandomColumn(),getRandomRow());
             if(!cellToSetMineAt.isMine()) {
                 cellToSetMineAt.setMine();
                 cellToSetMineAt.setValueIsCalculated(true);
                 minesLeftToSet--;
             }
         }
+    }
+    private void setMinePattern(CellPosition[] minePattern) {
+        for(int i = 0; i<=(minePattern.length-1); i++) {
+            Cell cellToSetMineAt = board.getCell(minePattern[i].getColumn(),minePattern[i].getRow());
+            if(!cellToSetMineAt.isMine()) {
+                cellToSetMineAt.setMine();
+                cellToSetMineAt.setValueIsCalculated(true);
+            }
+        }
+    }
+    void calculateValues() {
+        int randomColumn = getRandomColumn();
+        int randomRow = getRandomRow();;
+        while(board.getCell(randomColumn,randomRow).isMine()) {
+             randomColumn = getRandomColumn();
+             randomRow = getRandomRow();
+        }
+        board.calculateValues(randomColumn,randomRow);
     }
     
     private int getRandomColumn() {
@@ -69,10 +83,10 @@ public class Game {
     }
 
     
-    public void openCell(int i, int j) {
+    public void handleClick(int i, int j) {
         // Die Zelle die geöffnet werden soll wird mit Hilfe der Indizes bestimmt
         Cell cellToOpen;
-        cellToOpen = board.getNode(i, j);
+        cellToOpen = board.getCell(i, j);
         if(cellToOpen.isOpen()) {
             // wenn das Feld bereits geöffnet ist soll der Knopf wieder gewählt werden
             gui.setButtonSelected(i,j,true);
@@ -81,7 +95,7 @@ public class Game {
             gui.setButtonSelected(i,j,false);
         } else {
             // Wenn das Feld nicht offen, keine Flagge hatte und das Spiel noch nicht vorbei ist, so soll das Feld geöffnet werden
-            System.out.println("open"+i+j);
+            // System.out.println("open"+i+j);
             movesCounter++;
             gui.setMovesCounter(movesCounter);
             
@@ -93,9 +107,10 @@ public class Game {
                 lostGame = true;
                 endGame();
             } else {
-                if(cellToOpen.getValue() == 0)
+                if(cellToOpen.getValue() == 0) {
                     gui.setButtonText(i, j, "");
-                else
+                    findAllNeighboredZeros(i, j);
+                } else
                     gui.setButtonText(i, j, cellToOpen.getValueAsString());
                 if(movesCounter+mines == columns*rows) {
                     endGame();
@@ -103,10 +118,13 @@ public class Game {
             }
         }
     }
+    private void findAllNeighboredZeros(int i, int j) {
+        board.findAllNeighboredZeros(i, j);
+    }
     public void flagCell(int i, int j) {
         System.out.println("flag "+i+j);
         Cell cellToFlag;
-        cellToFlag = board.getNode(i, j);
+        cellToFlag = board.getCell(i, j);
         if(!gameOver && !cellToFlag.isOpen()) {
             // Flagge wird gesetzt oder entfernt wenn das Feld nicht offen und das Spiel nicht vorbei ist
             if(cellToFlag.isFlagged()) {

@@ -2,8 +2,17 @@ class Cell {
     // ein Feld muss speichern ob es geöffnet ist, ob es eine Flagge besitzt und ob es eine Mine ist
     private boolean isOpen, isFlagged, isMine, valueIsCalculated;
     // Ebenso wird der Wert gespeichert, der aussagt wie viele Minen das Feld benachbarn
-    private int value;
+    private int value, column, row;
     
+    Cell(int column, int row) {
+        this.row = row;
+        this.column = column;
+        isOpen = false;
+        isFlagged = false;
+        isMine = false;
+        valueIsCalculated = false;
+        value = 0;
+    }
     Cell() {
         isOpen = false;
         isFlagged = false;
@@ -11,7 +20,7 @@ class Cell {
         valueIsCalculated = false;
         value = 0;
     }
-
+    
     // set- und get-Methoden sind selbsterklärend
     void setMine() {
         isMine = true;
@@ -32,11 +41,17 @@ class Cell {
         this.valueIsCalculated = valueIsCalculated;
     }
     
+    int getColumn() {
+        return column;
+    }
+    int getRow() {
+        return row;
+    }
     String getValueAsString() {
         return ""+value;
     }
     int getValue() {
-        return +value;
+        return value;
     }
     boolean isOpen() {
         return isOpen;

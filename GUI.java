@@ -9,7 +9,28 @@ public class GUI {
     private JPanel panel;
     private JLabel gameOverLabel, youWonLabel, leftMinesCounter, movesCounter;
     private JToggleButton[][] buttonGrid;
-
+    
+    private class ownMouseAdapter extends MouseAdapter {
+        private Game game;
+        private int i, j;
+        private ownMouseAdapter(int i, int j, Game game) {
+            this.game = game;
+            this.i = i;
+            this.j = j;
+        }
+        @Override
+        public void mouseReleased(MouseEvent mouseEvent) {
+            if(SwingUtilities.isLeftMouseButton(mouseEvent)) {
+                // System.out.println("leftMouse");
+                game.handleClick(i, j);
+            }    //Left button released
+            if(SwingUtilities.isRightMouseButton(mouseEvent)) {
+                // System.out.println("rightMouse");
+                game.flagCell(i, j);
+            }    //Right button released
+        }
+    }
+    
     public GUI(Game game) {
         this.game = game;
         
